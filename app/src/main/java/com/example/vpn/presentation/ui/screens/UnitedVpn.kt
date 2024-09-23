@@ -114,14 +114,15 @@ fun UnitedVpn() {
                     .clip(RoundedCornerShape(bottomStart = 200.dp, bottomEnd = 200.dp))
                     .fillMaxWidth()
                     .background(Color(0XFF0b98fa))
-                    .height(350.dp), contentAlignment = Alignment.Center
+                    .height(290.dp), contentAlignment = Alignment.Center
             ) {
                 Column {
                     Box(modifier = Modifier
                         .size(120.dp)
                         .clickable {
                             viewModel.getUnitedVon()
-                        }, contentAlignment = Alignment.Center) {
+                        }, contentAlignment = Alignment.Center
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.whitecircal),
                             contentDescription = "",
@@ -219,8 +220,8 @@ fun UnitedVpn() {
 
             Row(
                 modifier = Modifier
-                    .width(200.dp)
-                    .height(60.dp)
+                    .width(230.dp)
+                    .height(55.dp)
                     .border(3.dp, color = Color(0XFF61bffc), shape = RoundedCornerShape(23.dp)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
