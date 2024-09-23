@@ -117,11 +117,13 @@ fun UnitedVpn() {
                     .height(290.dp), contentAlignment = Alignment.Center
             ) {
                 Column {
-                    Box(modifier = Modifier
-                        .size(120.dp)
-                        .clickable {
-                            viewModel.getUnitedVon()
-                        }, contentAlignment = Alignment.Center
+                    Box(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clickable {
+                                viewModel.getUnitedVon()
+                                isLoading = true
+                            }, contentAlignment = Alignment.Center
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.whitecircal),
@@ -144,11 +146,11 @@ fun UnitedVpn() {
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .size(8.dp)
-                                .background(Color.Green)
+                                .background(if (!isLoading) Color.Green else Color.Red)
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         Text(
-                            text = "Connected",
+                            text = if (!isLoading) "Connected" else "Desconnected",
                             color = Color.White,
                             fontWeight = FontWeight.Medium
                         )
