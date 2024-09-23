@@ -117,9 +117,11 @@ fun UnitedVpn() {
                     .height(350.dp), contentAlignment = Alignment.Center
             ) {
                 Column {
-                    Box(modifier = Modifier.size(120.dp).clickable {
-                        viewModel.getUnitedVon()
-                    }, contentAlignment = Alignment.Center) {
+                    Box(modifier = Modifier
+                        .size(120.dp)
+                        .clickable {
+                            viewModel.getUnitedVon()
+                        }, contentAlignment = Alignment.Center) {
                         Image(
                             painter = painterResource(id = R.drawable.whitecircal),
                             contentDescription = "",
@@ -219,7 +221,7 @@ fun UnitedVpn() {
                 modifier = Modifier
                     .width(200.dp)
                     .height(60.dp)
-                    .border(2.dp, color = Color(0XFF61bffc), shape = RoundedCornerShape(23.dp)),
+                    .border(3.dp, color = Color(0XFF61bffc), shape = RoundedCornerShape(23.dp)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -235,7 +237,7 @@ fun UnitedVpn() {
                 )
 
                 Text(
-                    text = "UnitedState",
+                    text = "United State",
                     color = Color.Gray,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
