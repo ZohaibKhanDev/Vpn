@@ -168,6 +168,7 @@ fun UnitedVpn() {
                 }
             }
 
+
             Text(
                 text = "Speed",
                 color = Color.Gray,
@@ -235,6 +236,7 @@ fun UnitedVpn() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+
                 Image(
                     painter = painterResource(id = R.drawable.unitedflag),
                     contentDescription = "",
@@ -256,6 +258,7 @@ fun UnitedVpn() {
                     contentDescription = "",
                     tint = Color.Gray
                 )
+
             }
         }
     }
