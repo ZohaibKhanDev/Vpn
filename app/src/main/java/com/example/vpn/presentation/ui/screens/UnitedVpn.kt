@@ -51,6 +51,8 @@ import com.example.vpn.R
 import com.example.vpn.domain.model.vpn.UnitedState
 import com.example.vpn.domain.usecase.ResultState
 import com.example.vpn.presentation.viewmodel.MainViewModel
+import com.example.vpn.utils.Constant.DOWNLOAD
+import com.example.vpn.utils.Constant.UPLOAD
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -202,7 +204,7 @@ fun UnitedVpn() {
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(text = "Download", color = Color(0XFF61bffc))
                     Text(
-                        text = if (isConnected) "4.3" else "- - -",
+                        text = if (isConnected) "$DOWNLOAD" else "- - -",
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Gray,
                         fontSize = 23.sp
@@ -217,7 +219,7 @@ fun UnitedVpn() {
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(text = "Upload", color = Color(0XFF61bffc))
                     Text(
-                        text = if (isConnected) "5.3" else "- - -",
+                        text = if (isConnected) "$UPLOAD" else "- - -",
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Gray,
                         fontSize = 23.sp
@@ -258,6 +260,7 @@ fun UnitedVpn() {
                         .size(25.dp)
                         .clip(CircleShape)
                 )
+
 
                 Text(
                     text = selectedCountry,
