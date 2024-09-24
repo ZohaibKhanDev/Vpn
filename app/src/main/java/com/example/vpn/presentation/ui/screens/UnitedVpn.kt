@@ -2,6 +2,13 @@ package com.example.vpn.presentation.ui.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.IBinder
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,6 +58,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
 import com.example.vpn.R
 import com.example.vpn.domain.model.vpn.UnitedState
 import com.example.vpn.domain.usecase.ResultState
@@ -184,6 +192,12 @@ fun UnitedVpn() {
                             .clip(CircleShape)
                             .size(120.dp)
                             .clickable {
+                                if (!isConnected) {
+                                    startVpnService(context)
+                                } else {
+                                    stopVpnService(context)
+                                }
+
                                 if (rewardedAd != null) {
                                     rewardedAd?.show(
                                         context as Activity,
@@ -404,3 +418,62 @@ fun UnitedVpn() {
         }
     }
 }
+
+fun startVpnService(context: Context) {
+    val intent = Intent(context, VpnService::class.java)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        context.startForegroundService(intent)
+    } else {
+        context.startService(intent)
+    }
+}
+
+fun stopVpnService(context: Context) {
+    val intent = Intent(context, VpnService::class.java)
+    context.stopService(intent)
+}
+
+class VpnService : Service() {
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        createNotificationChannel()
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = NotificationCompat.Builder(this, "vpn_channel_id")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("VPN Connected")
+            .setContentText("VPN is running")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        startForeground(1, notification)
+
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopForeground(true)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelName = "VPN Connection"
+            val channelDescription = "Shows the VPN connection status"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("vpn_channel_id", channelName, importance).apply {
+                description = channelDescription
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+}
+
