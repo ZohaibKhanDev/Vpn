@@ -103,4 +103,5 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.08.00"))
     implementation("io.coil-kt:coil-gif:2.4.0")
     implementation("com.google.android.exoplayer:exoplayer:2.18.2")
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 }

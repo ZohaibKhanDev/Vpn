@@ -1,6 +1,7 @@
 package com.example.vpn.presentation.ui.screens
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,12 +38,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -53,6 +56,15 @@ import com.example.vpn.domain.usecase.ResultState
 import com.example.vpn.presentation.viewmodel.MainViewModel
 import com.example.vpn.utils.Constant.DOWNLOAD
 import com.example.vpn.utils.Constant.UPLOAD
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +79,7 @@ fun UnitedVpn() {
     var bottomNavigation by remember { mutableStateOf(false) }
     var selectedCountry by remember { mutableStateOf("United State") }
     var selectedCountryFlag by remember { mutableStateOf(R.drawable.unitedflag) }
-
+    val scope = rememberCoroutineScope()
     when (state) {
         is ResultState.Error -> {
             val error = (state as ResultState.Error).error
@@ -87,6 +99,47 @@ fun UnitedVpn() {
     }
 
     val scroll = rememberScrollState()
+    val context = LocalContext.current
+
+    var rewardedAd: RewardedAd? = null
+    RewardedAd.load(
+        context,
+        "ca-app-pub-3940256099942544/2247696110",
+        AdRequest.Builder().build(),
+        object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+                rewardedAd = null
+            }
+
+            override fun onAdLoaded(p0: RewardedAd) {
+                super.onAdLoaded(p0)
+                rewardedAd = p0
+            }
+        }
+    )
+
+    rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+        override fun onAdClicked() {
+            super.onAdClicked()
+        }
+
+        override fun onAdDismissedFullScreenContent() {
+            super.onAdDismissedFullScreenContent()
+        }
+
+        override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+            super.onAdFailedToShowFullScreenContent(p0)
+        }
+
+        override fun onAdImpression() {
+            super.onAdImpression()
+        }
+
+        override fun onAdShowedFullScreenContent() {
+            super.onAdShowedFullScreenContent()
+        }
+    }
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = {
@@ -132,14 +185,20 @@ fun UnitedVpn() {
                             .clip(CircleShape)
                             .size(120.dp)
                             .clickable {
-                                if (isConnected) {
-                                    viewModel.disconnectVpn()
-                                    isConnected = false
-                                } else {
-                                    viewModel.getUnitedVon()
-                                    isConnected = true
+                                rewardedAd?.show(context as Activity, OnUserEarnedRewardListener {})
+                                scope.launch {
+                                    if (isConnected) {
+                                        viewModel.disconnectVpn()
+                                        isConnected = false
+                                    } else {
+                                        viewModel.getUnitedVon()
+                                        isConnected = true
+                                    }
+
+                                    delay(4000L)
+                                    isLoading = true
                                 }
-                                isLoading = true
+
                             }, contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -317,6 +376,7 @@ fun UnitedVpn() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
+                                viewModel.disconnectVpn()
                                 selectedCountry = country
                                 selectedCountryFlag = flag
                                 bottomNavigation = false
