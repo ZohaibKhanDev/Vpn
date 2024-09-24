@@ -186,7 +186,6 @@ fun UnitedVpn() {
                             .size(120.dp)
                             .clickable {
                                 rewardedAd?.show(context as Activity, OnUserEarnedRewardListener {})
-                                scope.launch {
                                     if (isConnected) {
                                         viewModel.disconnectVpn()
                                         isConnected = false
@@ -194,10 +193,8 @@ fun UnitedVpn() {
                                         viewModel.getUnitedVon()
                                         isConnected = true
                                     }
-
-                                    delay(4000L)
                                     isLoading = true
-                                }
+
 
                             }, contentAlignment = Alignment.Center
                     ) {
