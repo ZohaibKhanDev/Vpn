@@ -361,7 +361,7 @@ fun UnitedVpn() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 5.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -393,7 +393,7 @@ fun UnitedVpn() {
                             painter = painterResource(id = flag),
                             contentDescription = "",
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(45.dp)
                                 .clip(CircleShape)
                         )
 
