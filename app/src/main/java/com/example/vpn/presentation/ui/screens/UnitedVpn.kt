@@ -2,6 +2,7 @@ package com.example.vpn.presentation.ui.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -63,8 +64,6 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -185,15 +184,23 @@ fun UnitedVpn() {
                             .clip(CircleShape)
                             .size(120.dp)
                             .clickable {
-                                rewardedAd?.show(context as Activity, OnUserEarnedRewardListener {})
-                                    if (isConnected) {
-                                        viewModel.disconnectVpn()
-                                        isConnected = false
-                                    } else {
-                                        viewModel.getUnitedVon()
-                                        isConnected = true
-                                    }
-                                    isLoading = true
+                                if (rewardedAd != null) {
+                                    rewardedAd?.show(
+                                        context as Activity,
+                                        OnUserEarnedRewardListener {
+
+                                        })
+                                } else {
+                                    Log.d("AdLoad", "Rewarded ad was not loaded yet.")
+                                }
+                                if (isConnected) {
+                                    viewModel.disconnectVpn()
+                                    isConnected = false
+                                } else {
+                                    viewModel.getUnitedVon()
+                                    isConnected = true
+                                }
+                                isLoading = true
 
 
                             }, contentAlignment = Alignment.Center
@@ -386,7 +393,7 @@ fun UnitedVpn() {
                             painter = painterResource(id = flag),
                             contentDescription = "",
                             modifier = Modifier
-                                .size(50.dp)
+                                .size(40.dp)
                                 .clip(CircleShape)
                         )
 
