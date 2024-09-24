@@ -21,19 +21,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowCircleDown
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.MenuOpen
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -66,6 +62,9 @@ fun UnitedVpn() {
     var isLoading by remember { mutableStateOf(false) }
     var UnitedData by remember { mutableStateOf<UnitedState?>(null) }
     var isConnected by remember { mutableStateOf(false) }
+    var bottomNavigation by remember {
+        mutableStateOf(false)
+    }
 
     when (state) {
         is ResultState.Error -> {
@@ -87,21 +86,23 @@ fun UnitedVpn() {
 
     val scroll = rememberScrollState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "Vpn", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Medium
-                    )
-                },
-                navigationIcon = {
-                    Icon(imageVector = Icons.Outlined.MenuOpen, contentDescription = "", tint = Color.White)
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0XFF0b98fa))
+    Scaffold(topBar = {
+        CenterAlignedTopAppBar(title = {
+            Text(
+                text = "Vpn",
+                color = Color.White,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium
             )
-        }
-    ) {
+        }, navigationIcon = {
+            Icon(
+                imageVector = Icons.Outlined.MenuOpen,
+                contentDescription = "",
+                tint = Color.White
+            )
+        }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0XFF0b98fa))
+        )
+    }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -113,7 +114,11 @@ fun UnitedVpn() {
         ) {
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(bottomStart = 200.dp, bottomEnd = 200.dp))
+                    .clip(
+                        RoundedCornerShape(
+                            bottomStart = 200.dp, bottomEnd = 200.dp
+                        )
+                    )
                     .fillMaxWidth()
                     .background(Color(0XFF0b98fa))
                     .height(290.dp),
@@ -122,6 +127,7 @@ fun UnitedVpn() {
                 Column {
                     Box(
                         modifier = Modifier
+                            .clip(CircleShape)
                             .size(120.dp)
                             .clickable {
                                 if (isConnected) {
@@ -132,8 +138,7 @@ fun UnitedVpn() {
                                     isConnected = true
                                 }
                                 isLoading = true
-                            },
-                        contentAlignment = Alignment.Center
+                            }, contentAlignment = Alignment.Center
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.whitecircal),
@@ -196,9 +201,7 @@ fun UnitedVpn() {
                 }
 
                 VerticalDivider(
-                    color = Color.Gray,
-                    modifier = Modifier.height(90.dp),
-                    thickness = 4.dp
+                    color = Color.Gray, modifier = Modifier.height(90.dp), thickness = 4.dp
                 )
 
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
@@ -253,12 +256,252 @@ fun UnitedVpn() {
                     fontWeight = FontWeight.SemiBold
                 )
 
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowDown,
+                Icon(imageVector = Icons.Outlined.KeyboardArrowDown,
                     contentDescription = "",
-                    tint = Color.Gray
-                )
+                    tint = Color.Gray,
+                    modifier = Modifier.clickable {
+                        bottomNavigation = true
+                    })
+            }
+        }
+    }
 
+
+    if (bottomNavigation) {
+        ModalBottomSheet(onDismissRequest = { bottomNavigation = false }) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Choose Country", fontSize = 20.sp, fontWeight = FontWeight.Medium)
+            }
+
+            Spacer(modifier = Modifier.height(7.dp))
+
+            HorizontalDivider(color = Color.Gray)
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        bottomNavigation = false
+                    }
+                    .padding(top = 5.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.albania),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Albania", fontSize = 18.sp)
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.unitedflag),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "UnitedState", fontSize = 18.sp)
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.argentina),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Argentina", fontSize = 18.sp)
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.australia),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Australia", fontSize = 18.sp)
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.belarus),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Belarus", fontSize = 18.sp)
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.belgium),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Belgium", fontSize = 18.sp)
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.bosnia),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Bosnia", fontSize = 18.sp)
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.brazil),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Brazil", fontSize = 18.sp)
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            bottomNavigation = false
+                        }
+                        .padding(start = 25.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.bulgaria),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+
+                    Text(text = "Bulgaria", fontSize = 18.sp)
+                }
             }
         }
     }
