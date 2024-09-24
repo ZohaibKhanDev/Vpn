@@ -63,13 +63,9 @@ import org.koin.compose.koinInject
 fun UnitedVpn() {
     val viewModel: MainViewModel = koinInject()
     val state by viewModel.allVpn.collectAsState()
-    var isLoading by remember {
-        mutableStateOf(false)
-    }
-
-    var UnitedData by remember {
-        mutableStateOf<UnitedState?>(null)
-    }
+    var isLoading by remember { mutableStateOf(false) }
+    var UnitedData by remember { mutableStateOf<UnitedState?>(null) }
+    var isConnected by remember { mutableStateOf(false) }
 
     when (state) {
         is ResultState.Error -> {
@@ -88,18 +84,24 @@ fun UnitedVpn() {
             isLoading = false
         }
     }
+
     val scroll = rememberScrollState()
 
-
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(title = {
-            Text(
-                text = "Vpn", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Medium
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "Vpn", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Medium
+                    )
+                },
+                navigationIcon = {
+                    Icon(imageVector = Icons.Outlined.MenuOpen, contentDescription = "", tint = Color.White)
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0XFF0b98fa))
             )
-        }, navigationIcon = {
-            Icon(imageVector = Icons.Outlined.MenuOpen, contentDescription = "", tint = Color.White)
-        }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0XFF0b98fa)))
-    }) {
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -114,16 +116,24 @@ fun UnitedVpn() {
                     .clip(RoundedCornerShape(bottomStart = 200.dp, bottomEnd = 200.dp))
                     .fillMaxWidth()
                     .background(Color(0XFF0b98fa))
-                    .height(290.dp), contentAlignment = Alignment.Center
+                    .height(290.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Column {
                     Box(
                         modifier = Modifier
                             .size(120.dp)
                             .clickable {
-                                viewModel.getUnitedVon()
+                                if (isConnected) {
+                                    viewModel.disconnectVpn()
+                                    isConnected = false
+                                } else {
+                                    viewModel.getUnitedVon()
+                                    isConnected = true
+                                }
                                 isLoading = true
-                            }, contentAlignment = Alignment.Center
+                            },
+                        contentAlignment = Alignment.Center
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.whitecircal),
@@ -146,19 +156,17 @@ fun UnitedVpn() {
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .size(8.dp)
-                                .background(if (!isLoading) Color.Green else Color.Red)
+                                .background(if (!isLoading && isConnected) Color.Green else Color.Red)
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         Text(
-                            text = if (!isLoading) "Connected" else "Desconnected",
+                            text = if (isConnected) "Connected" else "Disconnected",
                             color = Color.White,
                             fontWeight = FontWeight.Medium
                         )
                     }
-
                 }
             }
-
 
             Text(
                 text = "Speed",
@@ -191,6 +199,7 @@ fun UnitedVpn() {
                     modifier = Modifier.height(90.dp),
                     thickness = 4.dp
                 )
+
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(text = "Upload", color = Color(0XFF61bffc))
                     Text(
@@ -201,23 +210,20 @@ fun UnitedVpn() {
                     )
                     Text(text = "mbs", color = Color.Gray, fontSize = 15.sp)
                 }
-
             }
-
 
             Spacer(modifier = Modifier.height(17.dp))
 
             Text(text = "Location", color = Color.Gray, fontSize = 20.sp)
 
-
             Image(
                 painter = painterResource(id = R.drawable.map),
                 contentDescription = "",
-                contentScale = ContentScale.Crop, modifier = Modifier
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)
             )
-
 
             Spacer(modifier = Modifier.height(14.dp))
 
@@ -235,9 +241,7 @@ fun UnitedVpn() {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(25.dp)
-                        .clip(
-                            CircleShape
-                        )
+                        .clip(CircleShape)
                 )
 
                 Text(
@@ -253,10 +257,6 @@ fun UnitedVpn() {
                     tint = Color.Gray
                 )
             }
-
         }
-
-
     }
-
 }

@@ -4,4 +4,5 @@ import com.example.vpn.domain.model.vpn.UnitedState
 
 interface ApiClient {
     suspend fun getUnitedVpn(): UnitedState
+    suspend fun disconnectVpn():String
 }

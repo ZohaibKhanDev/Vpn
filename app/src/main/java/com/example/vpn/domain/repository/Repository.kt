@@ -8,4 +8,8 @@ class Repository : ApiClient {
     override suspend fun getUnitedVpn(): UnitedState {
         return VpnApiClient.getUnitedState()
     }
+
+    override suspend fun disconnectVpn(): String {
+        return VpnApiClient.disconnect()
+    }
 }
