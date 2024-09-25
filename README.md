@@ -2,15 +2,9 @@
 ## Overview
 
 ## 🚀 Key Features
-- **  **
-- **  ** 
-- **  **
-- **  **
-- **  **
-- **  **
-- **  **
-- **  **
-- **  **
+- ** Jetpack Compose UI **
+- ** VPN Connection ** 
+- ** Customizable **
 
 ## 🤝 Connect with Me
 Let's chat about potential projects, job opportunities, or any other collaboration! Feel free to connect with me through the following channels:
