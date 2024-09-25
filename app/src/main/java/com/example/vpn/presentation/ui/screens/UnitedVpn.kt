@@ -433,7 +433,7 @@ fun stopVpnService(context: Context) {
     context.stopService(intent)
 }
 
-class VpnService : Service() {
+open class VpnService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
