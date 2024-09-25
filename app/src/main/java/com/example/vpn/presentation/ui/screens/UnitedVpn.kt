@@ -444,6 +444,7 @@ open class VpnService : Service() {
         createNotificationChannel()
     }
 
+    @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notification = NotificationCompat.Builder(this, "vpn_channel_id")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
