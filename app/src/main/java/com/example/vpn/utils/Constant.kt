@@ -6,3 +6,4 @@ object Constant {
     const val DOWNLOAD = 2.6
     const val UPLOAD = 3.5
 }
+
