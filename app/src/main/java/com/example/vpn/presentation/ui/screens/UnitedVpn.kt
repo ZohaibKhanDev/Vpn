@@ -87,6 +87,10 @@ fun UnitedVpn() {
     var selectedCountry by remember { mutableStateOf("United State") }
     var selectedCountryFlag by remember { mutableStateOf(R.drawable.unitedflag) }
     val scope = rememberCoroutineScope()
+    val scroll = rememberScrollState()
+    val context = LocalContext.current
+    var rewardedAd: RewardedAd? = null
+    
     when (state) {
         is ResultState.Error -> {
             val error = (state as ResultState.Error).error
@@ -105,10 +109,6 @@ fun UnitedVpn() {
         }
     }
 
-    val scroll = rememberScrollState()
-    val context = LocalContext.current
-    var rewardedAd: RewardedAd? = null
-    
     RewardedAd.load(
         context,
         "ca-app-pub-3940256099942544/2247696110",
@@ -242,18 +242,21 @@ fun UnitedVpn() {
                                 modifier = Modifier.size(120.dp)
                             )
                         }
-
                     }
+                    
                     Spacer(modifier = Modifier.height(15.dp))
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
+                        
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .size(8.dp)
                                 .background(if (!isLoading && isConnected) Color.Green else Color.Red)
                         )
+                        
                         Spacer(modifier = Modifier.width(5.dp))
+                        
                         Text(
                             text = if (isConnected) "Connected" else "Disconnected",
                             color = Color.White,
@@ -279,14 +282,18 @@ fun UnitedVpn() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    
                     Text(text = "Download", color = Color(0XFF61bffc))
+                    
                     Text(
                         text = if (isConnected) "$DOWNLOAD" else "- - -",
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Gray,
                         fontSize = 23.sp
                     )
+                    
                     Text(text = "mbs", color = Color.Gray, fontSize = 15.sp)
+                    
                 }
 
                 VerticalDivider(
