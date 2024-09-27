@@ -107,8 +107,8 @@ fun UnitedVpn() {
 
     val scroll = rememberScrollState()
     val context = LocalContext.current
-
     var rewardedAd: RewardedAd? = null
+    
     RewardedAd.load(
         context,
         "ca-app-pub-3940256099942544/2247696110",
@@ -351,7 +351,8 @@ fun UnitedVpn() {
                     tint = Color.Gray,
                     modifier = Modifier.clickable {
                         bottomNavigation = true
-                    })
+                    }
+                )
             }
         }
     }
@@ -378,7 +379,6 @@ fun UnitedVpn() {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 val countries = listOf(
                     "Albania" to R.drawable.albania,
                     "United State" to R.drawable.unitedflag,
