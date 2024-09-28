@@ -281,6 +281,7 @@ fun UnitedVpn() {
                 horizontalArrangement = Arrangement.spacedBy(22.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     
                     Text(text = "Download", color = Color(0XFF61bffc))
@@ -301,14 +302,18 @@ fun UnitedVpn() {
                 )
 
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    
                     Text(text = "Upload", color = Color(0XFF61bffc))
+                    
                     Text(
                         text = if (isConnected) "$UPLOAD" else "- - -",
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Gray,
                         fontSize = 23.sp
                     )
+                    
                     Text(text = "mbs", color = Color.Gray, fontSize = 15.sp)
+                    
                 }
             }
 
