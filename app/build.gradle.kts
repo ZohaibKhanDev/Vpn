@@ -72,18 +72,14 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.serialization.kotlinx.json)
     implementation(libs.ktor.client.android)
-
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.3")
-
     // Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation(platform("io.insert-koin:koin-bom:3.5.4"))
     implementation("io.insert-koin:koin-core")
