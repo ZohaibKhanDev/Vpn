@@ -365,6 +365,7 @@ fun UnitedVpn() {
                         bottomNavigation = true
                     }
                 )
+                
             }
         }
     }
@@ -489,4 +490,3 @@ open class VpnService : Service() {
         }
     }
 }
-
