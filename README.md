@@ -10,8 +10,8 @@ _A Modern VPN App built with Jetpack Compose_
 ---
 
 ## ✨ Overview 
-Compose VPN is a **lightweight** and **customizable VPN app** crafted entirely with **Jetpack Compose**.  
-It offers a modern UI, fast connection, and smooth user experience for VPN connections.  
+Compose VPN is a **lightweight** and **customizable VPN app** crafted entirely with **Jetpack Compose**.
+It offers a modern UI, fast connection, and smooth user experience for VPN connections.
 
 ---
 
