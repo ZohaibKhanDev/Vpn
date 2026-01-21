@@ -9,13 +9,13 @@ _A Modern VPN App built with Jetpack Compose_
 
 ---
 
-## ✨ Overview 
+## ✨ Overview
 Compose VPN is a **lightweight** and **customizable VPN app** crafted entirely with **Jetpack Compose**.
 It offers a modern UI, fast connection, and smooth user experience for VPN connections.
 
 ---
 
-## 🚀 Key Features  
+## 🚀 Key Features
 ✅ **Jetpack Compose UI** – 100% Compose-driven modern UI
 ✅ **Secure VPN Connection** – Connect quickly and safely
 ✅ **Customizable** – Easily adaptable for different VPN needs
@@ -33,16 +33,16 @@ It offers a modern UI, fast connection, and smooth user experience for VPN conne
 
 ## ⚡ Tech Stack  
 
-- **Kotlin** 🟣  
-- **Jetpack Compose** 🎨  
-- **Android VPNService API** 🔒  
-- **MVVM Architecture** 🏗  
+- **Kotlin** 🟣
+- **Jetpack Compose** 🎨
+- **Android VPNService API** 🔒
+- **MVVM Architecture** 🏗
 
 ---
 
 ## 🤝 Connect with Me  
 
-Let's chat about potential projects, collaborations, or job opportunities!  
+Let's chat about potential projects, collaborations, or job opportunities!
 
 <p align="center">
   <a href="https://www.linkedin.com/in/muhammad-zohaib-imtiaz-dev">
@@ -56,7 +56,7 @@ Let's chat about potential projects, collaborations, or job opportunities!
 ---
 
 ## ⭐ Support  
-If you like this project, don’t forget to **⭐ star the repo** and share it with others!  
+If you like this project, don’t forget to **⭐ star the repo** and share it with others!
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/ZohaibKhanDev/Vpn?style=social" />
